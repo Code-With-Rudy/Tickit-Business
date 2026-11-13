@@ -1,0 +1,13 @@
+# Secrets - never commit these
+serviceAccountKey.json
+.env
+.env.*
+!.env.example
+.vercel/
+
+# Python / editor
+__pycache__/
+*.pyc
+.venv/
+venv/
+.DS_Store

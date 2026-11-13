@@ -1,0 +1,7 @@
+Flask>=3.0
+Flask-Cors>=4.0
+Flask-Limiter>=3.5
+firebase-admin>=6.5
+PyJWT>=2.8
+Werkzeug>=3.0
+gunicorn

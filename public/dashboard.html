@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My tickets - Tick.IT</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="uber.css">
+</head>
+<body>
+    <header class="nav">
+        <a class="brand" href="/dashboard.html">Tick.IT</a>
+        <div class="nav-right">
+            <div class="nav-meta">
+                <div class="nm-name" id="userName">Loading...</div>
+                <div class="nm-sub">Customer</div>
+            </div>
+            <button class="logout-btn" type="button" data-click="logout">Log out</button>
+        </div>
+    </header>
+
+    <div class="container">
+        <div class="page-title">
+            <p class="eyebrow">Wallet balance</p>
+            <h1>₹<span id="walletBalance">0</span></h1>
+            <p>Your tickets for parks, temples, parking, rides and more</p>
+        </div>
+
+        <div class="dashboard-grid">
+            <div class="card">
+                <h3>Get a ticket</h3>
+                <button class="btn btn-lg btn-block" type="button" data-click="openScanner">Scan QR code</button>
+                <p class="or-text">or enter the service ID</p>
+                <div class="fare-input-group">
+                    <input type="text" id="serviceInput" maxlength="30" placeholder="e.g., PRK-7K3QM2" autocapitalize="characters" autocomplete="off">
+                    <button class="btn btn-secondary" type="button" data-click="openService">Open</button>
+                </div>
+                <div id="findError" class="error-message" style="display:none"></div>
+            </div>
+
+            <div class="card">
+                <h3>Wallet</h3>
+                <div class="balance-row">Current balance <strong>₹<span id="currentBalance">0</span></strong></div>
+                <div class="wallet-actions">
+                    <input type="number" class="fund-input" id="fundAmount" placeholder="Amount to add" min="1" max="10000">
+                    <button class="btn" type="button" data-click="addFunds">Add funds</button>
+                </div>
+                <div id="walletMessage"></div>
+            </div>
+        </div>
+
+        <div class="card">
+            <h3>Active tickets</h3>
+            <div id="activeTickets"><div class="loading">Loading tickets...</div></div>
+        </div>
+
+        <div class="card" style="margin-top:24px">
+            <h3>Ticket history</h3>
+            <div class="filter-buttons">
+                <button class="active" type="button" data-click="filterTickets" data-arg="all">All</button>
+                <button type="button" data-click="filterTickets" data-arg="valid">Valid</button>
+                <button type="button" data-click="filterTickets" data-arg="used">Used</button>
+                <button type="button" data-click="filterTickets" data-arg="expired">Expired</button>
+            </div>
+            <div id="ticketHistory"><div class="loading">Loading tickets...</div></div>
+        </div>
+    </div>
+
+    <div class="modal" id="scanModal" role="dialog" aria-modal="true" aria-labelledby="scanTitle">
+        <div class="modal-card">
+            <h3 id="scanTitle">Scan a Tick.IT QR code</h3>
+            <div id="qr-reader" class="qr-reader"></div>
+            <p id="scanStatus" class="scan-status"></p>
+            <button class="btn btn-secondary btn-block" type="button" data-click="closeScanner">Cancel</button>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/html5-qrcode@2.3.8/html5-qrcode.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/qrcode-generator@1.4.4/qrcode.js"></script>
+    <script src="js/common.js"></script>
+    <script src="js/dashboard.js"></script>
+</body>
+</html>

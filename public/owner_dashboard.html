@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Business dashboard - Tick.IT</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="uber.css">
+</head>
+<body>
+    <div id="notification-container"></div>
+    <header class="nav dark">
+        <a class="brand" href="/owner_dashboard.html">Tick.IT <span style="font-weight:500;opacity:.6">Business</span></a>
+        <div class="nav-right">
+            <div class="nav-meta">
+                <div class="nm-name" id="businessName">Loading...</div>
+                <div class="nm-sub" id="businessCategory" style="color:#afafaf"></div>
+            </div>
+            <button class="logout-btn" type="button" data-click="logout">Log out</button>
+        </div>
+    </header>
+
+    <div class="container">
+        <div class="page-title">
+            <p class="eyebrow">Total earnings</p>
+            <h1>₹<span id="totalEarnings">0</span></h1>
+            <p>Sell tickets, share your QR, validate entries</p>
+        </div>
+
+        <div class="analytics-grid">
+            <div class="analytics-card"><div class="analytics-value" id="todayRevenue">₹0</div><div class="analytics-label">Today's revenue</div></div>
+            <div class="analytics-card"><div class="analytics-value" id="activeTicketsCount">0</div><div class="analytics-label">Unused tickets</div></div>
+            <div class="analytics-card"><div class="analytics-value" id="totalCustomers">0</div><div class="analytics-label">Customers</div></div>
+        </div>
+
+        <!-- Services -->
+        <div class="card" style="margin-bottom:24px">
+            <div class="card-head">
+                <h3>Your services</h3>
+                <button class="btn" type="button" data-click="openServiceForm">Add service</button>
+            </div>
+            <p class="qr-hint left">Each service has its own ID, QR code and booking link. Create one for every kind of ticket you sell (e.g. Adult entry, Child entry, 2-hour parking).</p>
+            <div id="servicesList"><div class="loading">Loading services...</div></div>
+            <div id="bizLinkRow" class="biz-link" style="display:none">
+                <div><strong>All-services page</strong><small id="bizLinkText"></small></div>
+                <div class="btn-row">
+                    <button class="btn btn-secondary" type="button" data-click="copyBizLink">Copy link</button>
+                    <a class="btn btn-secondary" id="bizWhatsapp" target="_blank" rel="noopener noreferrer">WhatsApp</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="dashboard-grid">
+            <div class="card">
+                <h3>Validate entry</h3>
+                <p class="qr-hint left">Scan the customer's ticket QR. Each ticket works once.</p>
+                <button class="btn btn-lg btn-block" type="button" data-click="openTicketScanner">Scan ticket QR</button>
+                <p class="or-text">or type the backup code from their ticket</p>
+                <div class="fare-input-group">
+                    <input type="text" id="manualCode" maxlength="8" placeholder="8-character code" autocapitalize="characters" autocomplete="off">
+                    <button class="btn btn-secondary" type="button" data-click="redeemCode">Validate</button>
+                </div>
+            </div>
+            <div class="card">
+                <h3>Quick statistics</h3>
+                <div class="stats-grid">
+                    <div class="stat-item"><div class="stat-value" id="totalTickets">0</div><div class="stat-label">Tickets sold</div></div>
+                    <div class="stat-item"><div class="stat-value" id="usedTickets">0</div><div class="stat-label">Used</div></div>
+                    <div class="stat-item"><div class="stat-value" id="expiredTickets">0</div><div class="stat-label">Expired unused</div></div>
+                </div>
+                <div class="metric-box">
+                    <p><strong>Revenue per customer:</strong> ₹<span id="revenuePerCustomer">0</span></p>
+                </div>
+                <div class="btn-row" style="margin-top:16px"><button class="btn btn-sync" type="button" data-click="syncRevenue">Sync revenue</button></div>
+                <div id="settingsMessage"></div>
+            </div>
+        </div>
+
+        <div class="card">
+            <h3>Tickets</h3>
+            <div class="ticket-tabs">
+                <button class="tab-button active" type="button" data-click="showTickets" data-arg="active">Unused</button>
+                <button class="tab-button" type="button" data-click="showTickets" data-arg="used">Used</button>
+                <button class="tab-button" type="button" data-click="showTickets" data-arg="expired">Expired</button>
+                <button class="tab-button" type="button" data-click="showTickets" data-arg="all">All</button>
+            </div>
+            <div id="ticketsDisplay"><div class="loading">Loading tickets...</div></div>
+        </div>
+    </div>
+
+    <!-- Create / edit service -->
+    <div class="modal" id="serviceModal" role="dialog" aria-modal="true" aria-labelledby="serviceModalTitle">
+        <div class="modal-card">
+            <h3 id="serviceModalTitle">Add service</h3>
+            <div class="form-group"><label for="svcName">Service name</label>
+                <input type="text" id="svcName" maxlength="60" placeholder="e.g., Adult Entry"></div>
+            <div class="form-group"><label for="svcDescription">Description (optional)</label>
+                <input type="text" id="svcDescription" maxlength="200" placeholder="e.g., Day pass, includes boating"></div>
+            <div class="form-row">
+                <div class="form-group"><label for="svcPrice">Price per ticket (₹)</label>
+                    <input type="number" id="svcPrice" min="0" max="100000" value="50"><small>0 = free ticket</small></div>
+                <div class="form-group"><label for="svcValidity">Valid for</label>
+                    <select id="svcValidity">
+                        <option value="30">30 minutes</option><option value="60" selected>1 hour</option>
+                        <option value="120">2 hours</option><option value="180">3 hours</option>
+                        <option value="360">6 hours</option><option value="1440">1 day</option>
+                        <option value="4320">3 days</option><option value="10080">7 days</option>
+                        <option value="43200">30 days</option>
+                    </select><small>Counted from purchase</small></div>
+            </div>
+            <div class="error-message" id="svcFormError" style="display:none"></div>
+            <button class="btn btn-lg btn-block" type="button" data-click="saveService" id="svcSaveBtn">Save service</button>
+            <button class="btn btn-secondary btn-block" type="button" data-click="closeModal" data-arg="serviceModal">Cancel</button>
+        </div>
+    </div>
+
+    <!-- Share / QR for one service -->
+    <div class="modal" id="shareModal" role="dialog" aria-modal="true" aria-labelledby="shareTitle">
+        <div class="modal-card">
+            <h3 id="shareTitle">Share</h3>
+            <div class="qr-box" id="shareQr"></div>
+            <p class="qr-vehicle" id="shareId"></p>
+            <div class="biz-link"><small id="shareLinkText" style="word-break:break-all"></small></div>
+            <div class="btn-row">
+                <button class="btn" type="button" data-click="copyShareLink">Copy link</button>
+                <a class="btn btn-secondary" id="shareWhatsapp" target="_blank" rel="noopener noreferrer">WhatsApp</a>
+                <button class="btn btn-secondary" type="button" data-click="nativeShare" id="nativeShareBtn" style="display:none">Share…</button>
+            </div>
+            <div class="btn-row">
+                <button class="btn btn-secondary" type="button" data-click="downloadQrPng">Download PNG</button>
+                <button class="btn btn-secondary" type="button" data-click="downloadQrSvg">Download SVG</button>
+                <button class="btn btn-secondary" type="button" data-click="printPoster">Print poster</button>
+            </div>
+            <button class="btn btn-secondary btn-block" type="button" data-click="closeModal" data-arg="shareModal">Close</button>
+        </div>
+    </div>
+
+    <!-- Validate ticket -->
+    <div class="modal" id="verifyModal" role="dialog" aria-modal="true" aria-labelledby="verifyTitleH">
+        <div class="modal-card">
+            <h3 id="verifyTitleH">Validate ticket</h3>
+            <div id="verifyScanArea">
+                <div id="ticket-reader" class="qr-reader"></div>
+                <p id="verifyStatus" class="scan-status"></p>
+            </div>
+            <div id="verifyResult" class="verify-result" style="display:none">
+                <div class="verify-icon" id="verifyIcon"></div>
+                <div class="verify-title" id="verifyTitle"></div>
+                <div class="verify-admit" id="verifyAdmit"></div>
+                <div class="verify-detail" id="verifyDetail"></div>
+                <button class="btn btn-lg btn-block" type="button" data-click="scanNext">Scan next ticket</button>
+            </div>
+            <button class="btn btn-secondary btn-block" type="button" data-click="closeTicketScanner">Close</button>
+        </div>
+    </div>
+
+    <!-- Printed only: poster for the entrance / counter / vehicle -->
+    <div id="posterArea" aria-hidden="true">
+        <p class="poster-biz" id="posterBiz"></p>
+        <h1 id="posterService"></h1>
+        <div class="poster-qr" id="posterQr"></div>
+        <p class="poster-vehicle" id="posterId"></p>
+        <p>Scan with your phone camera or the Tick.IT app to buy your ticket.</p>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/html5-qrcode@2.3.8/html5-qrcode.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/qrcode-generator@1.4.4/qrcode.js"></script>
+    <script src="js/common.js"></script>
+    <script src="js/owner.js"></script>
+</body>
+</html>

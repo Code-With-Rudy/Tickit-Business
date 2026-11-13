@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tick.IT — QR tickets for local businesses</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="uber.css">
+</head>
+<body>
+    <header class="nav">
+        <a class="brand" href="/index.html">Tick.IT</a>
+        <div class="nav-right">
+            <button class="btn btn-secondary" type="button" data-click="openAuthTab" data-arg="user-login">Log in</button>
+            <button class="btn" type="button" data-click="openAuthTab" data-arg="user-register">Sign up</button>
+        </div>
+    </header>
+
+    <main class="hero">
+        <section>
+            <h1>One QR. Any local business.</h1>
+            <p class="lead">Eco parks, temples, parking lots, auto rides, events - sell tickets by QR or a WhatsApp link, and validate entries at the gate. Customers pay from a wallet and get a ticket in seconds.</p>
+            <div class="hero-art" aria-hidden="true">
+                <svg viewBox="0 0 400 300" xmlns="http://www.w3.org/2000/svg">
+                    <rect width="400" height="300" fill="#efefef"/>
+                    <path d="M70 70h260a14 14 0 0 1 14 14v34a22 22 0 0 0 0 44v34a14 14 0 0 1-14 14H70a14 14 0 0 1-14-14v-34a22 22 0 0 0 0-44V84a14 14 0 0 1 14-14z" fill="#000"/>
+                    <rect x="84" y="92" width="120" height="10" rx="5" fill="#fff"/>
+                    <rect x="84" y="112" width="84" height="8" rx="4" fill="#afafaf"/>
+                    <rect x="84" y="170" width="70" height="26" rx="13" fill="#fff"/>
+                    <line x1="226" y1="82" x2="226" y2="218" stroke="#4b4b4b" stroke-width="2" stroke-dasharray="6 6"/>
+                    <rect x="246" y="104" width="72" height="72" rx="8" fill="#fff"/>
+                    <path d="M256 114h20v20h-20zM288 114h20v20h-20zM256 146h20v20h-20zM288 146h8v8h-8zM300 158h8v8h-8z" fill="#000"/>
+                </svg>
+            </div>
+        </section>
+
+        <section class="auth-card" id="auth">
+            <div class="inner">
+                <div class="tabs" role="tablist">
+                    <button class="tab active" type="button" data-click="showTab" data-arg="user-login">Customer log in</button>
+                    <button class="tab" type="button" data-click="showTab" data-arg="user-register">Customer sign up</button>
+                    <button class="tab" type="button" data-click="showTab" data-arg="owner-login">Owner log in</button>
+                    <button class="tab" type="button" data-click="showTab" data-arg="owner-register">Owner sign up</button>
+                </div>
+
+                <!-- User Login -->
+                <div id="user-login" class="form-container active">
+                    <h2>Welcome back</h2>
+                    <p class="sub">Your tickets, your wallet, one tap away.</p>
+                    <form id="userLoginForm">
+                        <div class="form-group">
+                            <label for="userEmail">Email address</label>
+                            <input type="email" id="userEmail" name="email" required autocomplete="email">
+                        </div>
+                        <div class="form-group">
+                            <label for="userPassword">Password</label>
+                            <input type="password" id="userPassword" name="password" required maxlength="128" autocomplete="current-password">
+                        </div>
+                        <button type="submit" class="btn btn-lg btn-block">Log in as customer</button>
+                        <div class="error" id="userLoginError"></div>
+                        <div class="success" id="userLoginSuccess"></div>
+                    </form>
+                    <div class="loading" id="userLoginLoading"></div>
+                    <div class="or-divider"><span>or</span></div>
+                    <button type="button" class="btn btn-google btn-lg btn-block" data-click="googleSignIn" data-arg="customer" data-form="userLogin"><svg class="g-icon" viewBox="0 0 48 48" aria-hidden="true"><path fill="#EA4335" d="M24 9.5c3.5 0 6.6 1.2 9.1 3.6l6.8-6.8C35.9 2.4 30.4 0 24 0 14.6 0 6.5 5.4 2.6 13.2l7.9 6.1C12.4 13.5 17.7 9.5 24 9.5z"/><path fill="#4285F4" d="M46.5 24.5c0-1.6-.1-3.1-.4-4.5H24v9h12.7c-.6 3-2.3 5.5-4.8 7.2l7.5 5.8c4.4-4.1 7.1-10.1 7.1-17.5z"/><path fill="#FBBC05" d="M10.5 28.7A14.5 14.5 0 0 1 9.5 24c0-1.6.3-3.2.8-4.7l-7.9-6.1A24 24 0 0 0 0 24c0 3.9.9 7.5 2.6 10.8l7.9-6.1z"/><path fill="#34A853" d="M24 48c6.5 0 11.9-2.1 15.9-5.8l-7.5-5.8c-2.1 1.4-4.8 2.3-8.4 2.3-6.3 0-11.6-4-13.5-9.8l-7.9 6.1C6.5 42.6 14.6 48 24 48z"/></svg> Continue with Google</button>
+                </div>
+
+                <!-- User Registration -->
+                <div id="user-register" class="form-container">
+                    <h2>Get tickets with Tick.IT</h2>
+                    <p class="sub">Scan a QR or open a link, pay, and get your ticket instantly.</p>
+                    <form id="userRegisterForm">
+                        <div class="form-group">
+                            <label for="userRegName">Full name</label>
+                            <input type="text" id="userRegName" name="fullName" required autocomplete="name">
+                        </div>
+                        <div class="form-group">
+                            <label for="userRegEmail">Email address</label>
+                            <input type="email" id="userRegEmail" name="email" required autocomplete="email">
+                        </div>
+                        <div class="form-group">
+                            <label for="userRegPassword">Password</label>
+                            <input type="password" id="userRegPassword" name="password" required minlength="8" autocomplete="new-password">
+                            <small>At least 8 characters</small>
+                        </div>
+                        <button type="submit" class="btn btn-lg btn-block">Create customer account</button>
+                        <div class="error" id="userRegisterError"></div>
+                        <div class="success" id="userRegisterSuccess"></div>
+                    </form>
+                    <div class="loading" id="userRegisterLoading"></div>
+                    <div class="or-divider"><span>or</span></div>
+                    <button type="button" class="btn btn-google btn-lg btn-block" data-click="googleSignIn" data-arg="customer" data-form="userRegister"><svg class="g-icon" viewBox="0 0 48 48" aria-hidden="true"><path fill="#EA4335" d="M24 9.5c3.5 0 6.6 1.2 9.1 3.6l6.8-6.8C35.9 2.4 30.4 0 24 0 14.6 0 6.5 5.4 2.6 13.2l7.9 6.1C12.4 13.5 17.7 9.5 24 9.5z"/><path fill="#4285F4" d="M46.5 24.5c0-1.6-.1-3.1-.4-4.5H24v9h12.7c-.6 3-2.3 5.5-4.8 7.2l7.5 5.8c4.4-4.1 7.1-10.1 7.1-17.5z"/><path fill="#FBBC05" d="M10.5 28.7A14.5 14.5 0 0 1 9.5 24c0-1.6.3-3.2.8-4.7l-7.9-6.1A24 24 0 0 0 0 24c0 3.9.9 7.5 2.6 10.8l7.9-6.1z"/><path fill="#34A853" d="M24 48c6.5 0 11.9-2.1 15.9-5.8l-7.5-5.8c-2.1 1.4-4.8 2.3-8.4 2.3-6.3 0-11.6-4-13.5-9.8l-7.9 6.1C6.5 42.6 14.6 48 24 48z"/></svg> Continue with Google</button>
+                </div>
+
+                <!-- Owner Login -->
+                <div id="owner-login" class="form-container">
+                    <h2>Owner log in</h2>
+                    <p class="sub">Your services, tickets, entry scanning and earnings.</p>
+                    <form id="ownerLoginForm">
+                        <div class="form-group">
+                            <label for="ownerEmail">Email address</label>
+                            <input type="email" id="ownerEmail" name="email" required autocomplete="email">
+                        </div>
+                        <div class="form-group">
+                            <label for="ownerPassword">Password</label>
+                            <input type="password" id="ownerPassword" name="password" required autocomplete="current-password">
+                        </div>
+                        <button type="submit" class="btn btn-lg btn-block">Log in as owner</button>
+                        <div class="error" id="ownerLoginError"></div>
+                        <div class="success" id="ownerLoginSuccess"></div>
+                    </form>
+                    <div class="loading" id="ownerLoginLoading"></div>
+                    <div class="or-divider"><span>or</span></div>
+                    <button type="button" class="btn btn-google btn-lg btn-block" data-click="googleSignIn" data-arg="owner" data-form="ownerLogin"><svg class="g-icon" viewBox="0 0 48 48" aria-hidden="true"><path fill="#EA4335" d="M24 9.5c3.5 0 6.6 1.2 9.1 3.6l6.8-6.8C35.9 2.4 30.4 0 24 0 14.6 0 6.5 5.4 2.6 13.2l7.9 6.1C12.4 13.5 17.7 9.5 24 9.5z"/><path fill="#4285F4" d="M46.5 24.5c0-1.6-.1-3.1-.4-4.5H24v9h12.7c-.6 3-2.3 5.5-4.8 7.2l7.5 5.8c4.4-4.1 7.1-10.1 7.1-17.5z"/><path fill="#FBBC05" d="M10.5 28.7A14.5 14.5 0 0 1 9.5 24c0-1.6.3-3.2.8-4.7l-7.9-6.1A24 24 0 0 0 0 24c0 3.9.9 7.5 2.6 10.8l7.9-6.1z"/><path fill="#34A853" d="M24 48c6.5 0 11.9-2.1 15.9-5.8l-7.5-5.8c-2.1 1.4-4.8 2.3-8.4 2.3-6.3 0-11.6-4-13.5-9.8l-7.9 6.1C6.5 42.6 14.6 48 24 48z"/></svg> Continue with Google</button>
+                </div>
+
+                <!-- Owner Registration -->
+                <div id="owner-register" class="form-container">
+                    <h2>Sell tickets with Tick.IT</h2>
+                    <p class="sub">Parks, temples, parking, rides, events - create a service, share its QR or link, validate entries.</p>
+                    <form id="ownerRegisterForm">
+                        <div class="form-group">
+                            <label for="ownerRegName">Full name</label>
+                            <input type="text" id="ownerRegName" name="fullName" required autocomplete="name">
+                        </div>
+                        <div class="form-group">
+                            <label for="ownerRegEmail">Email address</label>
+                            <input type="email" id="ownerRegEmail" name="email" required autocomplete="email">
+                        </div>
+                        <div class="form-group">
+                            <label for="businessName">Business name</label>
+                            <input type="text" id="businessName" name="businessName" maxlength="60" placeholder="e.g., Eco Park Entry" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="category">Category</label>
+                            <select id="category" name="category" required>
+                                <option value="park">Park / Attraction</option>
+                                <option value="temple">Temple / Religious</option>
+                                <option value="parking">Parking</option>
+                                <option value="transport">Ride / Transport</option>
+                                <option value="event">Event</option>
+                                <option value="other">Other business</option>
+                            </select>
+                        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="inner"><a class="brand" href="/index.html" style="color:#fff">Tick.IT</a><span>QR tickets for local businesses</span></div>
+    </footer>
+
+    <script src="js/common.js"></script>
+    <script src="js/index.js"></script>
+    <script type="module" src="js/google-auth.js"></script>
+</body>
+</html>
+

@@ -1,0 +1,10 @@
+rules_version = '2';
+// Only the Flask backend (Firebase Admin SDK, which bypasses these rules) touches the database.
+// Browsers must never read or write Firestore directly: wallet balances live here.
+service cloud.firestore {
+  match /databases/{database}/documents {
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}

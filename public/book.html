@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Book a ticket - Tick.IT</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="uber.css">
+</head>
+<body>
+    <header class="nav">
+        <a class="brand" href="/index.html">Tick.IT</a>
+        <div class="nav-right" id="navRight"></div>
+    </header>
+
+    <div class="container narrow">
+        <div id="state" class="loading">Loading...</div>
+
+        <!-- One service -->
+        <div id="serviceView" style="display:none">
+            <div class="page-title">
+                <p class="eyebrow" id="svcBusiness"></p>
+                <h1 id="svcName"></h1>
+                <p id="svcDesc"></p>
+            </div>
+            <div class="card">
+                <div class="price-line"><span class="price-big">₹<span id="svcPrice">0</span></span><span class="price-unit" id="svcUnit">per ticket</span></div>
+                <p class="meta-line">Valid for <strong id="svcValidity"></strong> after purchase · <span id="svcCategory"></span> · ID <span class="mono" id="svcId"></span></p>
+                <div id="buyPanel"></div>
+            </div>
+        </div>
+
+        <!-- All services of one business -->
+        <div id="businessView" style="display:none">
+            <div class="page-title">
+                <p class="eyebrow" id="bizCategory"></p>
+                <h1 id="bizName"></h1>
+                <p>Choose a ticket</p>
+            </div>
+            <div id="bizServices" class="svc-list"></div>
+        </div>
+
+        <!-- After payment -->
+        <div id="successView" style="display:none">
+            <div class="ticket-card valid">
+                <div class="ticket-header"><span class="ticket-id" id="okName"></span><span class="ticket-status valid">VALID</span></div>
+                <div class="ticket-details">
+                    <p><strong>Admits:</strong> <span id="okQty"></span></p>
+                    <p><strong>Paid:</strong> ₹<span id="okPaid"></span></p>
+                    <p><strong>Valid until:</strong> <span id="okExpires"></span></p>
+                </div>
+                <div class="qr-ticket">
+                    <div id="okQr" class="qr-box"></div>
+                    <p class="qr-hint">Show this QR at the entrance.</p>
+                    <p class="qr-hint">Backup code: <span class="mono" id="okCode"></span></p>
+                </div>
+            </div>
+            <a class="btn btn-lg btn-block" href="dashboard.html" style="margin-top:16px">View my tickets</a>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/qrcode-generator@1.4.4/qrcode.js"></script>
+    <script src="js/common.js"></script>
+    <script src="js/book.js"></script>
+</body>
+</html>
